@@ -136,6 +136,7 @@ public final class FileCompiler {
    * @return the process that executed the external compile command
    * @throws Error if an empty list of filenames is provided.
    */
+  @SuppressWarnings("index") // new A[i+1]:  0..i are indices for new A[i+1]
   private TimeLimitProcess compile_source(List<String> filenames) throws IOException {
     int num_files = filenames.size();
 

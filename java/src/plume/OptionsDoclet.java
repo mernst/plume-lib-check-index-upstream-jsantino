@@ -320,6 +320,7 @@ public class OptionsDoclet {
    * @return true iff the command-line options are valid
    * @see <a href="http://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/doclet/overview.html">Doclet overview</a>
    */
+  @SuppressWarnings("index") // options is an array of 1- or 2-element arrays
   public static boolean validOptions(String[][] options, DocErrorReporter reporter) {
     boolean hasDocFile = false;
     boolean hasOutFile = false;
@@ -398,6 +399,7 @@ public class OptionsDoclet {
    * RootDoc.options().
    * @param options the command-line options to parse: a list of 1- or 2-element arrays
    */
+  @SuppressWarnings("index") // options is an array of 1- or 2-element arrays
   public void setOptions(String[][] options) {
     String outFilename = null;
     File destDir = null;
@@ -598,6 +600,7 @@ public class OptionsDoclet {
    * Get the HTML documentation for the underlying options instance.
    * @return the HTML documentation for the underlying options instance
    */
+  @SuppressWarnings("index") // classes() is pure
   public String optionsToHtml() {
     StringBuilderDelimited b = new StringBuilderDelimited(eol);
 

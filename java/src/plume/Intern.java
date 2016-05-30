@@ -197,6 +197,7 @@ public final class Intern {
    * @see Arrays#equals(Object[],Object[])
    */
   private static final class DoubleArrayHasher implements Hasher {
+    @SuppressWarnings("index") // same length: da1, da2
     @Override
     public boolean equals(Object a1, Object a2) {
       // "Arrays.equals" considers +0.0 != -0.0.

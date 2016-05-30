@@ -64,6 +64,7 @@ public final class TestPlume extends TestCase {
   // under instrumentation such as that of Chicory.
   static boolean short_run = false;
 
+  @SuppressWarnings("index") // array length: 0 is an index because length>0
   public static void main(String[] args) {
     if ((args.length > 0) && args[0].equals("--shortrun")) {
       short_run = true;
@@ -158,6 +159,7 @@ public final class TestPlume extends TestCase {
   /// Now the actual testing
   ///
 
+  @SuppressWarnings("index") // array length: legal indices for length-10 arrays
   public static void testArraysMDE() {
 
     // public static int min(int[] a)

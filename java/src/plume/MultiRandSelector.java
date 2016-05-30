@@ -74,6 +74,7 @@ public class MultiRandSelector<T> {
     }
   }
 
+  @SuppressWarnings("index") // bug in Index Checker?
   public void accept(T next) {
     T equivClass = eq.assignToBucket(next);
     if (equivClass == null) {

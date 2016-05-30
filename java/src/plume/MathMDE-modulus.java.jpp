@@ -39,6 +39,7 @@ The correct way to build the system is to run 'make'.
       return null;
     }
 
+    @SuppressWarnings("index")  // array length: 0 is an index because length>2
     INT remainder = nums[0] % modulus;
     if (remainder < 0) {
       remainder += modulus;
@@ -112,6 +113,7 @@ The correct way to build the system is to run 'make'.
    * @return an array of two integers (r,m) such that each number in NUMS is equal to r (mod m),
    *   or null if no such exists or the array contains fewer than 3 elements
    */
+  @SuppressWarnings("index")    // array length: is at least 3
   public static INT /*@Nullable*/ [] modulus_strict(INT[] nums, boolean nonstrict_ends) {
     if (nums.length < 3) {
       return null;

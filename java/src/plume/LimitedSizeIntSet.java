@@ -48,6 +48,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
     num_values = 0;
   }
 
+  @SuppressWarnings("index") // num_values may or may not be an index
   public void add(int elt) {
     if (values == null) {
       return;
@@ -65,6 +66,8 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
     num_values++;
   }
 
+  @SuppressWarnings(
+      "index") // bug in Index Checker? even with side effects, i remains an index for s
   public void addAll(LimitedSizeIntSet s) {
     @SuppressWarnings("interning") // optimization; not a subclass of Collection, though
     boolean sameObject = (this == s);
@@ -98,7 +101,10 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
     }
   }
 
-  @SuppressWarnings("deterministic") // pure wrt equals() but not ==: throws a new exception
+  @SuppressWarnings({
+    "deterministic", // pure wrt equals() but not ==: throws a new exception
+    "index" // num_values may or may not be an index
+  })
   /*@Pure*/
   public boolean contains(int elt) {
     if (values == null) {

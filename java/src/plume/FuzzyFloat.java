@@ -220,6 +220,7 @@ public class FuzzyFloat {
    * @see java.util.Vector#indexOf(java.lang.Object)
    * @see java.lang.String#indexOf(java.lang.String)
    */
+  @SuppressWarnings("index") // arithmetic in array indices
   /*@Pure*/
   public int indexOf(double[] a, double[] sub) {
 
@@ -342,6 +343,7 @@ public class FuzzyFloat {
      * @param a2 the second array to compare
      * @return positive if o1 &gt; 02, 0 if o1 == o2, negative if o1 &lt; o2
      */
+    @SuppressWarnings("index") // Math.min
     /*@Pure*/
     public int compare(double[] a1, double[] a2) {
       if (a1 == a2) {

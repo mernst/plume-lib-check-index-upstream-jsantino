@@ -54,6 +54,7 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 /*>>>
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.regex.qual.*;
 import org.checkerframework.checker.signature.qual.*;
@@ -720,6 +721,7 @@ public final class UtilMDE {
    * @param arglist an argument list, in JVML format
    * @return argument list, in Java format
    */
+  @SuppressWarnings("index") // last char cannot be '['
   public static String arglistFromJvm(String arglist) {
     if (!(arglist.startsWith("(") && arglist.endsWith(")"))) {
       throw new Error("Malformed arglist: " + arglist);
@@ -1834,6 +1836,7 @@ public final class UtilMDE {
    * @throws ClassNotFoundException if the class is not found
    * @throws NoSuchMethodException if the method is not found
    */
+  @SuppressWarnings("index") // bug in Index Checker?;  also, same length: argnames, argclasses_tmp
   public static Method methodForName(String method)
       throws ClassNotFoundException, NoSuchMethodException, SecurityException {
 
@@ -2232,6 +2235,7 @@ public final class UtilMDE {
    * @param delim delimiter to place between printed representations
    * @return the concatenation of the string representations of the values, with the delimiter between
    */
+  @SuppressWarnings("index") // array length: 0 is an index because length>=1
   public static String join(Object[] a, String delim) {
     if (a.length == 0) {
       return "";
@@ -2265,6 +2269,7 @@ public final class UtilMDE {
    * @param delim delimiter to place between printed representations
    * @return the concatenation of the string representations of the values, with the delimiter between
    */
+  @SuppressWarnings("index") // array length: 0 is an index because length>=1
   public static String join(List<?> v, String delim) {
     if (v.size() == 0) {
       return "";
@@ -2423,6 +2428,7 @@ public final class UtilMDE {
    * @param orig string to quoto
    * @return quoted version of orig
    */
+  @SuppressWarnings("index") // arithmetic: an index remains after this_esc
   public static String unescapeNonJava(String orig) {
     StringBuffer sb = new StringBuffer();
     // The previous escape character was seen just before this position.
@@ -2567,6 +2573,7 @@ public final class UtilMDE {
    * @param delimiter string to remove whitespace before
    * @return version of arg, with whitespace before delimiter removed
    */
+  @SuppressWarnings("index") // bug in Index Checker?:  failure to handle indexOf or arithmetic
   public static String removeWhitespaceBefore(String arg, String delimiter) {
     // System.out.println("removeWhitespaceBefore(\"" + arg + "\", \"" + delimiter + "\")");
     // String orig = arg;
@@ -2828,7 +2835,10 @@ public final class UtilMDE {
    * @param o2 second value to comare
    * @return true iff o1 and o2 are deeply equal
    */
-  @SuppressWarnings("purity") // side effect to static field deepEqualsUnderway
+  @SuppressWarnings({
+    "purity", // side effect to static field deepEqualsUnderway
+    "index" // same length: l1, l2
+  })
   /*@Pure*/
   public static boolean deepEquals(/*@Nullable*/ Object o1, /*@Nullable*/ Object o2) {
     @SuppressWarnings("interning")
@@ -2941,7 +2951,8 @@ public final class UtilMDE {
    * @param objs list of elements to
    * @return list of lists of length dims, each of which combines elements from objs
    */
-  public static <T> List<List<T>> create_combinations(int dims, int start, List<T> objs) {
+  public static <T> List<List<T>> create_combinations(
+      int dims, /*@NonNegative*/ int start, List<T> objs) {
 
     if (dims < 1) {
       throw new IllegalArgumentException();

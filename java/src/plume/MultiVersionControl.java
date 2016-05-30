@@ -439,6 +439,7 @@ public class MultiVersionControl {
           UtilMDE.join(remaining_args, " "));
       System.exit(1);
     }
+    @SuppressWarnings("index") // array length: 0 is an index because length==1
     String action_string = remaining_args[0];
     if ("checkout".startsWith(action_string)) {
       action = CLONE;
@@ -641,7 +642,9 @@ public class MultiVersionControl {
         System.out.println("split length: " + splitTwo.length);
       }
       if (splitTwo.length == 2) {
+        @SuppressWarnings("index") // array length: 0 is an index because length==2
         String word1 = splitTwo[0];
+        @SuppressWarnings("index") // array length: 1 is an index because length==2
         String word2 = splitTwo[1];
         if (word1.equals("BZRROOT:") || word1.equals("BZRREPOS:")) {
           currentType = RepoType.BZR;
@@ -655,6 +658,7 @@ public class MultiVersionControl {
           // If the CVSROOT is remote, try to make it local.
           if (currentRoot.startsWith(":ext:")) {
             String[] rootWords = currentRoot.split(":");
+            @SuppressWarnings("index") // string splitting: contains a colon
             String possibleRoot = rootWords[rootWords.length - 1];
             if (new File(possibleRoot).isDirectory()) {
               currentRoot = possibleRoot;
@@ -1553,6 +1557,7 @@ public class MultiVersionControl {
   // If show_normal_output is true, then display the output even if the process
   // completed normally.  Ordinarily, output is displayed only if the
   // process completed erroneously.
+  @SuppressWarnings("index") // Math.min
   void perform_command(ProcessBuilder pb, List<Replacer> replacers, boolean show_normal_output) {
     /// The redirectOutput method only exists in Java 1.7.  Sigh.
     /// The workaround is to make TimeLimitProcess buffer its output.

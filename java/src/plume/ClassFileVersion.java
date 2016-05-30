@@ -39,6 +39,8 @@ public final class ClassFileVersion {
    * @param args command-line arguments
    * @throws IOException if a file cannot be read
    */
+  @SuppressWarnings(
+      "index") // array length: after testing a.length, smaller constants are @IndexFor("a")
   public static void main(String[] args) throws IOException {
     if (args.length == 0) {
       System.out.println("Supplied no arguments.");
@@ -97,8 +99,11 @@ public final class ClassFileVersion {
     if (versions == null) {
       System.out.println(filename + " is not a .class file (or IOException)");
     } else {
+      @SuppressWarnings("index") // array length: known to be of length 3
       double major = versions[0];
+      @SuppressWarnings("index") // array length: known to be of length 3
       double minor = versions[1];
+      @SuppressWarnings("index") // array length: known to be of length 3
       double jdkVersion = versions[2];
 
       if (jdkVersion >= minversion) {

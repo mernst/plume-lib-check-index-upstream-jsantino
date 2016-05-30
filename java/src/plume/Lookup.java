@@ -368,6 +368,7 @@ public final class Lookup {
     if (matching_entries.size() == 0) {
       System.out.println("Nothing found.");
     } else if (matching_entries.size() == 1) {
+      @SuppressWarnings("index") // array length: 0 is an index if length is 1
       Entry e = matching_entries.get(0);
       if (show_location) {
         System.out.printf("%s:%d:%n", e.filename, e.line_number);
@@ -384,6 +385,7 @@ public final class Lookup {
               "Illegal --item-num %d, should be <= %d%n", item_num, matching_entries.size());
           System.exit(1);
         }
+        @SuppressWarnings("index") // base-1 index: item_num was tested
         Entry e = matching_entries.get(item_num - 1);
         if (show_location) {
           System.out.printf("%s:%d:%n", e.filename, e.line_number);
