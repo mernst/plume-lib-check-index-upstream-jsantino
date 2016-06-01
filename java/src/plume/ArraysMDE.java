@@ -24,7 +24,8 @@ import org.checkerframework.framework.qual.PolyAll;
  * Utilities for manipulating arrays and collections.
  * This complements {@link java.util.Arrays} and {@link java.util.Collections}.
  */
-@SuppressWarnings("interning") // to do later
+@SuppressWarnings({"interning", "index"}) // to do later
+
 public final class ArraysMDE {
   /** This class is a collecton of methods; it does not represent anything. */
   private ArraysMDE() {
