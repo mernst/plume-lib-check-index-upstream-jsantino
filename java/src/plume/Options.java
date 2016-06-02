@@ -787,9 +787,8 @@ public class Options {
    * Like getAnnotation, but returns null (and prints a warning) rather
    * than throwing an exception.
    */
-  @SuppressWarnings({
-      "initialization", // bug; see test case checkers/tests/nullness/generics/OptionsTest.java
-      "return.type.incompatible" }) // not sure but theres a warning
+  @SuppressWarnings("initialization") // bug; see test case checkers/tests/nullness/generics/OptionsTest.java
+
   private static <T extends Annotation> /*@Nullable*/ T safeGetAnnotation(
       Field f, Class<T> annotationClass) {
     /*@Nullable*/ T annotation;
