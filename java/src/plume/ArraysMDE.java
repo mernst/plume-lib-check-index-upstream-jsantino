@@ -18,13 +18,14 @@ import java.util.Vector;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
 import org.checkerframework.framework.qual.PolyAll;
+import org.checkerframework.checker.index.qual.*;
 */
 
 /**
  * Utilities for manipulating arrays and collections.
  * This complements {@link java.util.Arrays} and {@link java.util.Collections}.
  */
-@SuppressWarnings({"interning", "index"}) // to do later
+@SuppressWarnings({"interning"}) // to do later
 
 public final class ArraysMDE {
   /** This class is a collecton of methods; it does not represent anything. */
@@ -272,7 +273,7 @@ public final class ArraysMDE {
    * @return a two-element array containing the smallest and largest values in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
-  public static int[] min_max(int[] a) {
+  public static int /*@MinLen(2)*/ [] min_max(int[] a) {
     if (a.length == 0) {
       // return null;
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min_max(int[])");
@@ -292,7 +293,7 @@ public final class ArraysMDE {
    * @return a two-element array containing the smallest and largest values in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
-  public static long[] min_max(long[] a) {
+  public static long /*@MinLen(2)*/ [] min_max(long[] a) {
     if (a.length == 0) {
       // return null;
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min_max(long[])");
@@ -352,6 +353,7 @@ public final class ArraysMDE {
    * @param a a 2d array
    * @return the sum of all the elements of a 2d array of integers
    */
+  @SuppressWarnings("index") // don't support 2d
   public static int sum(int[][] a) {
     int sum = 0;
     for (int i = 0; i < a.length; i++) {
@@ -380,6 +382,7 @@ public final class ArraysMDE {
    * @param a a 2d array
    * @return the sum of all the elements of a 2d array of doubles
    */
+  @SuppressWarnings("index") // don't support 2d
   public static double sum(double[][] a) {
     double sum = 0;
     for (int i = 0; i < a.length; i++) {
@@ -431,7 +434,7 @@ public final class ArraysMDE {
    * @see java.util.List#indexOf(java.lang.Object)
    */
   /*@Pure*/
-  public static <T> int indexOf(T[] a, /*@Nullable*/ Object elt, int minindex, int indexlimit) {
+  public static <T> int indexOf(T[] a, /*@Nullable*/ Object elt, /*@IndexFor("a")*/ int minindex, /*@IndexOrHigh("a")*/ int indexlimit) {
     if (elt == null) {
       return indexOfEq(a, elt, minindex, indexlimit);
     }
@@ -474,8 +477,8 @@ public final class ArraysMDE {
   public static int indexOf(
       List<? extends /*@PolyNull*/ Object> a,
       /*@Nullable*/ Object elt,
-      int minindex,
-      int indexlimit) {
+      /*@IndexFor("a")*/ int minindex,
+      /*@IndexOrHigh("a")*/ int indexlimit) {
     if (elt == null) {
       return indexOfEq(a, elt, minindex, indexlimit);
     }
@@ -520,7 +523,7 @@ public final class ArraysMDE {
    */
   /*@Pure*/
   public static int indexOfEq(
-      /*@PolyNull*/ Object[] a, /*@Nullable*/ Object elt, int minindex, int indexlimit) {
+      /*@PolyNull*/ Object[] a, /*@Nullable*/ Object elt, /*@IndexFor("a")*/ int minindex, /*@IndexOrHigh("a")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a[i]) {
         return i;
@@ -564,8 +567,8 @@ public final class ArraysMDE {
   public static int indexOfEq(
       List<? extends /*@PolyNull*/ Object> a,
       /*@Nullable*/ Object elt,
-      int minindex,
-      int indexlimit) {
+      /*@IndexFor("a")*/ int minindex,
+      /*@IndexOrHigh("a")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a.get(i)) {
         return i;
@@ -622,7 +625,7 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
-  public static int indexOf(int[] a, int elt, int minindex, int indexlimit) {
+  public static int indexOf(int[] a, int elt, /*@IndexFor("a")*/ int minindex, /*@IndexOrHigh("a")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a[i]) {
         return i;
@@ -643,7 +646,7 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
-  public static int indexOf(long[] a, long elt, int minindex, int indexlimit) {
+  public static int indexOf(long[] a, long elt, /*@IndexFor("a")*/ int minindex, /*@IndexOrHigh("a")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a[i]) {
         return i;
@@ -700,7 +703,7 @@ public final class ArraysMDE {
    * @see java.util.Vector#indexOf(java.lang.Object)
    */
   /*@Pure*/
-  public static int indexOf(boolean[] a, boolean elt, int minindex, int indexlimit) {
+  public static int indexOf(boolean[] a, boolean elt, /*@IndexFor("a")*/ int minindex, /*@IndexOrHigh("a")*/ int indexlimit) {
     for (int i = minindex; i < indexlimit; i++) {
       if (elt == a[i]) {
         return i;
@@ -1179,6 +1182,7 @@ public final class ArraysMDE {
    *    or -1 if no such element is found in the array
    */
   /*@Pure*/
+  @SuppressWarnings("index") // going through a subset of a
   public static boolean isSubarray(
       /*@PolyAll*/ Object[] a, /*@PolyNull*/ Object[] sub, int a_offset) {
     int a_len = a.length - a_offset;
@@ -1205,6 +1209,7 @@ public final class ArraysMDE {
    *    or -1 if the element is not found in the array
    */
   /*@Pure*/
+  @SuppressWarnings("index") // going through a subset of a
   public static boolean isSubarrayEq(
       /*@PolyAll*/ Object[] a, /*@PolyAll*/ Object[] sub, int a_offset) {
     int a_len = a.length - a_offset;
@@ -1231,6 +1236,7 @@ public final class ArraysMDE {
    *    or -1 if no such element is found in the array
    */
   /*@Pure*/
+  @SuppressWarnings("index") // going through a subset of a
   public static boolean isSubarray(/*@PolyAll*/ Object[] a, List<?> sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.size();
@@ -1256,6 +1262,7 @@ public final class ArraysMDE {
    *    or -1 if the element is not found in the array
    */
   /*@Pure*/
+  @SuppressWarnings("index") // going through a subset of a
   public static boolean isSubarrayEq(/*@PolyAll*/ Object[] a, List<?> sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.size();
@@ -1281,6 +1288,7 @@ public final class ArraysMDE {
    *    or -1 if no such element is found in the array
    */
   /*@Pure*/
+  @SuppressWarnings("index") // going through a subset of a
   public static boolean isSubarray(List<?> a, /*@PolyAll*/ Object[] sub, int a_offset) {
     int a_len = a.size() - a_offset;
     int sub_len = sub.length;
@@ -1306,6 +1314,7 @@ public final class ArraysMDE {
    *    or -1 if the element is not found in the array
    */
   /*@Pure*/
+  @SuppressWarnings("index") // going through a subset of a
   public static boolean isSubarrayEq(List<?> a, /*@PolyAll*/ Object[] sub, int a_offset) {
     int a_len = a.size() - a_offset;
     int sub_len = sub.length;
@@ -1331,6 +1340,7 @@ public final class ArraysMDE {
    *    or -1 if no such element is found in the array
    */
   /*@Pure*/
+  @SuppressWarnings("index") // going through a subset of a
   public static boolean isSubarray(List<?> a, List<?> sub, int a_offset) {
     int a_len = a.size() - a_offset;
     int sub_len = sub.size();
@@ -1356,6 +1366,7 @@ public final class ArraysMDE {
    *    or -1 if the element is not found in the array
    */
   /*@Pure*/
+  @SuppressWarnings("index") // going through a subset of a
   public static boolean isSubarrayEq(List<?> a, List<?> sub, int a_offset) {
     int a_len = a.size() - a_offset;
     int sub_len = sub.size();
@@ -1380,6 +1391,7 @@ public final class ArraysMDE {
    *    or -1 if the element is not found in the array
    */
   /*@Pure*/
+  @SuppressWarnings("index") // going through a subset of a
   public static boolean isSubarray(int[] a, int[] sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
@@ -1404,6 +1416,7 @@ public final class ArraysMDE {
    *    or -1 if the element is not found in the array
    */
   /*@Pure*/
+  @SuppressWarnings("index") // going through a subset of a
   public static boolean isSubarray(long[] a, long[] sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
@@ -1428,6 +1441,7 @@ public final class ArraysMDE {
    *    or -1 if the element is not found in the array
    */
   /*@Pure*/
+  @SuppressWarnings("index") // going through a subset of a
   public static boolean isSubarray(double[] a, double[] sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
@@ -1452,6 +1466,7 @@ public final class ArraysMDE {
    *    or -1 if the element is not found in the array
    */
   /*@Pure*/
+  @SuppressWarnings("index") // going through a subset of a
   public static boolean isSubarray(boolean[] a, boolean[] sub, int a_offset) {
     int a_len = a.length - a_offset;
     int sub_len = sub.length;
@@ -1528,6 +1543,7 @@ public final class ArraysMDE {
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
    */
+  @SuppressWarnings("index") // know that result length i a + b so i + a is safe
   public static <T> T[] concat(T /*@Nullable*/ [] a, /*@Nullable*/ List<T> b) {
     if (a == null) {
       if (b != null) {
@@ -1564,6 +1580,7 @@ public final class ArraysMDE {
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
    */
+  @SuppressWarnings("index") // know that result length i a + b so i + a is safe
   public static <T> T[] concat(/*@Nullable*/ List<T> a, T /*@Nullable*/ [] b) {
     if (a == null) {
       if (b != null) {
@@ -1600,6 +1617,7 @@ public final class ArraysMDE {
    * @param b the second sequence to concatenate
    * @return an array that concatenates the arguments
    */
+  @SuppressWarnings("index") // know that result length i a + b so i + a is safe
   public static <T> T[] concat(/*@Nullable*/ List<T> a, /*@Nullable*/ List<T> b) {
     if (a == null) {
       if (b != null) {
@@ -2218,6 +2236,7 @@ public final class ArraysMDE {
    * @return true iff the array is sorted
    */
   /*@Pure*/
+  @SuppressWarnings("index") // only going to a.length -1
   public static boolean sorted(int[] a) {
     for (int i = 0; i < a.length - 1; i++) {
       if (a[i + 1] < a[i]) {
@@ -2233,6 +2252,7 @@ public final class ArraysMDE {
    * @return true iff the array is sorted
    */
   /*@Pure*/
+  @SuppressWarnings("index") // only going to a.length -1
   public static boolean sorted(long[] a) {
     for (int i = 0; i < a.length - 1; i++) {
       if (a[i + 1] < a[i]) {
@@ -2248,6 +2268,7 @@ public final class ArraysMDE {
    * @return true iff the array is sorted in desending order
    */
   /*@Pure*/
+  @SuppressWarnings("index") // only going to a.length -1
   public static boolean sorted_descending(int[] a) {
     for (int i = 0; i < a.length - 1; i++) {
       if (a[i + 1] > a[i]) {
@@ -2263,6 +2284,7 @@ public final class ArraysMDE {
    * @return true iff the array is sorted in desending order
    */
   /*@Pure*/
+  @SuppressWarnings("index") // only going to a.length -1
   public static boolean sorted_descending(long[] a) {
     for (int i = 0; i < a.length - 1; i++) {
       if (a[i + 1] > a[i]) {
@@ -2523,7 +2545,8 @@ public final class ArraysMDE {
    * @return true iff all elements of a are in [0..a.length) and a
    * contains no duplicates.
    */
-  @SuppressWarnings("purity") // side effect to local state (array)
+  @SuppressWarnings({"purity",	 // side effect to local state (array)
+  						"index"}) // see.length = a.length
   /*@Pure*/
   public static boolean fn_is_permutation(int[] a) {
     // In the common case we expect to succeed, so use as few loops as possible
@@ -2601,6 +2624,7 @@ public final class ArraysMDE {
    * @return function from [0..a.length) to range R that is the
    * composition of a and b
    */
+  @SuppressWarnings("index") // result.length = a.length
   public static int[] fn_compose(int[] a, int[] b) {
     int[] result = new int[a.length];
     for (int i = 0; i < a.length; i++) {
@@ -2733,6 +2757,7 @@ public final class ArraysMDE {
      * equal to, or greater than the second argument
      */
     /*@Pure*/
+    @SuppressWarnings("index") // goes to min of 2 lengths
     public int compare(int[] a1, int[] a2) {
       if (a1 == a2) {
         return 0;
@@ -2769,6 +2794,7 @@ public final class ArraysMDE {
      * than the second argument
      */
     /*@Pure*/
+    @SuppressWarnings("index") // goes to min of 2 lengths
     public int compare(long[] a1, long[] a2) {
       if (a1 == a2) {
         return 0;
@@ -2806,6 +2832,7 @@ public final class ArraysMDE {
      * than the second argument
      */
     /*@Pure*/
+    @SuppressWarnings("index") // goes to min of 2 lengths
     public int compare(double[] a1, double[] a2) {
       if (a1 == a2) {
         return 0;
@@ -2844,12 +2871,13 @@ public final class ArraysMDE {
      * than the second argument
      */
     /*@Pure*/
-    @SuppressWarnings(
-        "override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+    @SuppressWarnings({
+        "override.param.invalid", // CF bug: does not permit expanding annotations on array elements with @Poly
     // The signature on this method is unnecessarily strict because it
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) String[], @PolyAll(2) String[]), but the
     // @PolyAll qualifier does not yet take an argument.
+    "index"}) // goes to min of 2 lengths
     public int compare(/*@PolyAll*/ String[] a1, /*@PolyAll*/ String[] a2) {
       if (a1 == a2) {
         return 0;
@@ -2897,12 +2925,13 @@ public final class ArraysMDE {
      * than the second argument
      */
     /*@Pure*/
-    @SuppressWarnings(
-        "override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+    @SuppressWarnings({
+        "override.param.invalid", // CF bug: does not permit expanding annotations on array elements with @Poly
     // The signature on this method is unnecessarily strict because it
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) T[], @PolyAll(2) T[]), but the
     // @PolyAll qualifier does not yet take an argument.
+    		"index"}) // goes to min of 2 lengths
     public int compare(/*@PolyAll*/ T[] a1, /*@PolyAll*/ T[] a2) {
       if (a1 == a2) {
         return 0;
@@ -2955,12 +2984,13 @@ public final class ArraysMDE {
      * than the second argument
      */
     /*@Pure*/
-    @SuppressWarnings(
-        "override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+    @SuppressWarnings({
+        "override.param.invalid", // CF bug: does not permit expanding annotations on array elements with @Poly
     // The signature on this method is unnecessarily strict because it
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) Object[], @PolyAll(2) Object[]), but the
     // @PolyAll qualifier does not yet take an argument.
+		"index"}) // goes to min of 2 lengths
     public int compare(/*@PolyAll*/ Object[] a1, /*@PolyAll*/ Object[] a2) {
       if (a1 == a2) {
         return 0;
@@ -3013,6 +3043,7 @@ public final class ArraysMDE {
      * than the second argument
      */
     /*@Pure*/
+    @SuppressWarnings("index") // lengths are the same
     public int compare(int[] a1, int[] a2) {
       if (a1 == a2) {
         return 0;
@@ -3053,6 +3084,7 @@ public final class ArraysMDE {
      * than the second argument
      */
     /*@Pure*/
+    @SuppressWarnings("index") // lengths are the same
     public int compare(long[] a1, long[] a2) {
       if (a1 == a2) {
         return 0;
@@ -3093,12 +3125,13 @@ public final class ArraysMDE {
      * than the second argument
      */
     /*@Pure*/
-    @SuppressWarnings(
-        "override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+    @SuppressWarnings({
+        "override.param.invalid", // CF bug: does not permit expanding annotations on array elements with @Poly
     // The signature on this method is unnecessarily strict because it
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) T[], @PolyAll(2) T[]), but the
     // @PolyAll qualifier does not yet take an argument.
+        "index"}) // lengths are equal
     public int compare(/*@PolyAll*/ T[] a1, /*@PolyAll*/ T[] a2) {
       if (a1 == a2) {
         return 0;
@@ -3154,12 +3187,13 @@ public final class ArraysMDE {
      * than the second argument
      */
     /*@Pure*/
-    @SuppressWarnings(
-        "override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+    @SuppressWarnings({
+        "override.param.invalid", // CF bug: does not permit expanding annotations on array elements with @Poly
     // The signature on this method is unnecessarily strict because it
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) Object[], @PolyAll(2) Object[]), but the
     // @PolyAll qualifier does not yet take an argument.
+        "index"}) // lengths are equal
     public int compare(/*@PolyAll*/ Object[] a1, /*@PolyAll*/ Object[] a2) {
       if (a1 == a2) {
         return 0;
