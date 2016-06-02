@@ -541,8 +541,6 @@ public final class BCELUtil {
    * @param mg the method to check
    * @return true iff the method is a main method
    */
-  @SuppressWarnings(
-      "index") // array length: after testing a.length, smaller constants are @IndexFor("a")
   public static boolean is_main(MethodGen mg) {
     Type[] arg_types = mg.getArgumentTypes();
     return (mg.isStatic()
@@ -584,7 +582,6 @@ public final class BCELUtil {
    * @param new_type the element to add to the end of the types array
    * @return the array (or a new one), with new_type at the end
    */
-  @SuppressWarnings("index") // new A[i+1]: i is an index for new A[i+1]
   public static Type[] add_type(Type[] types, Type new_type) {
     Type[] new_types = new Type[types.length + 1];
     System.arraycopy(types, 0, new_types, 0, types.length);
@@ -599,7 +596,6 @@ public final class BCELUtil {
    * @param new_type the element to add to the beginning of the types array
    * @return the array (or a new one), with new_type at the beginning
    */
-  @SuppressWarnings("index") // new A[i+1]: i is an index for new A[i+1]
   public static Type[] insert_type(Type new_type, Type[] types) {
     Type[] new_types = new Type[types.length + 1];
     System.arraycopy(types, 0, new_types, 1, types.length);

@@ -39,7 +39,6 @@ The correct way to build the system is to run 'make'.
       return null;
     }
 
-    @SuppressWarnings("index")  // array length: 0 is an index because length>2
     INT remainder = nums[0] % modulus;
     if (remainder < 0) {
       remainder += modulus;

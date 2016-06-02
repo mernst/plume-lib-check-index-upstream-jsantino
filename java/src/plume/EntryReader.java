@@ -808,7 +808,6 @@ public class EntryReader extends LineNumberReader implements Iterable<String>, I
    * @param args command-line arguments: filename [comment_re [include_re]]
    * @throws IOException if there is a problem reading a file
    */
-  @SuppressWarnings("index") // array length: args.length was tested
   public static void main(String[] args) throws IOException {
 
     if (args.length < 1 || args.length > 3) {

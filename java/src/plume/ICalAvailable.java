@@ -249,9 +249,7 @@ public final class ICalAvailable {
         System.err.println("Bad time range: " + range);
         System.exit(1);
       }
-      @SuppressWarnings("index") // array length: 0 is index if length is 2
       DateTime busStart = parseTime(startEnd[0]);
-      @SuppressWarnings("index") // array length: 1 is index if length is 2
       DateTime busEnd = parseTime(startEnd[1]);
       businessHours.add(new Period(busStart, busEnd));
     }

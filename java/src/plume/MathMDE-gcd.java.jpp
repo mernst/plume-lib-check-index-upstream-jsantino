@@ -45,7 +45,6 @@ The correct way to build the system is to run 'make'.
     if (a.length == 0) {
       return 0;
     }
-    @SuppressWarnings("index")  // array length: 0 is an index because length>0
     INT result = a[0];
     for (int i=1; i<a.length; i++) {
       result = gcd(a[i], result);
@@ -68,7 +67,6 @@ The correct way to build the system is to run 'make'.
     if (a.length < 2) {
       return 0;
     }
-    @SuppressWarnings("index")  // array length: 0 and 1 are indices because length>1
     INT result = a[1] - a[0];
     for (int i=2; i<a.length; i++) {
       result = gcd(a[i] - a[i-1], result);
