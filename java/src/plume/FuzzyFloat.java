@@ -343,7 +343,7 @@ public class FuzzyFloat {
      * @param a2 the second array to compare
      * @return positive if o1 &gt; 02, 0 if o1 == o2, negative if o1 &lt; o2
      */
-    @SuppressWarnings("index") // Math.min
+    @SuppressWarnings("index")  // index for two arrays; issue #15
     /*@Pure*/
     public int compare(double[] a1, double[] a2) {
       if (a1 == a2) {

@@ -1557,7 +1557,6 @@ public class MultiVersionControl {
   // If show_normal_output is true, then display the output even if the process
   // completed normally.  Ordinarily, output is displayed only if the
   // process completed erroneously.
-  @SuppressWarnings("index") // Math.min
   void perform_command(ProcessBuilder pb, List<Replacer> replacers, boolean show_normal_output) {
     /// The redirectOutput method only exists in Java 1.7.  Sigh.
     /// The workaround is to make TimeLimitProcess buffer its output.

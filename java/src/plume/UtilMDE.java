@@ -1836,7 +1836,7 @@ public final class UtilMDE {
    * @throws ClassNotFoundException if the class is not found
    * @throws NoSuchMethodException if the method is not found
    */
-  @SuppressWarnings("index") // bug in Index Checker?;  also, same length: argnames, argclasses_tmp
+  @SuppressWarnings("index") // same length: argnames, argclasses_tmp
   public static Method methodForName(String method)
       throws ClassNotFoundException, NoSuchMethodException, SecurityException {
 
@@ -2573,7 +2573,7 @@ public final class UtilMDE {
    * @param delimiter string to remove whitespace before
    * @return version of arg, with whitespace before delimiter removed
    */
-  @SuppressWarnings("index") // bug in Index Checker?:  failure to handle indexOf or arithmetic
+  @SuppressWarnings("index")    // issue #17
   public static String removeWhitespaceBefore(String arg, String delimiter) {
     // System.out.println("removeWhitespaceBefore(\"" + arg + "\", \"" + delimiter + "\")");
     // String orig = arg;

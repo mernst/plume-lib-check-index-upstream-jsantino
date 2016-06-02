@@ -264,7 +264,6 @@ The correct way to build the system is to run 'make'.
    */
   // This seems to give too many false positives (or maybe my probability
   // model was wrong); use nonmodulus_strict instead.
-  @SuppressWarnings("index")    // Math.min
   public static INT /*@Nullable*/ [] nonmodulus_nonstrict(INT[] nums) {
     if (nums.length < 4) {
       return null;
@@ -280,7 +279,8 @@ The correct way to build the system is to run 'make'.
       boolean[] has_modulus = new boolean[m]; // initialized to false?
       int num_nonmodulus = m;
       for (int i=0; i<nums.length; i++) {
-        int rem = CastToInt(mod_positive(nums[i], m));
+        @SuppressWarnings("index") // mod_positive returns a value < m
+        /*@IndexFor("has_modulus")*/ int rem = CastToInt(mod_positive(nums[i], m));
         if (!has_modulus[rem]) {
           has_modulus[rem] = true;
           num_nonmodulus--;

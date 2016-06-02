@@ -383,12 +383,9 @@ public class Options {
         List<Object> default_obj_as_list = (List<Object>) default_obj;
         this.list = default_obj_as_list;
         // System.out.printf ("list default = %s%n", list);
-        
-        // pt.getActualArguments can be empty
-        Type[] tmp = pt.getActualTypeArguments();
-        if (tmp.length != 0) {
-        	this.base_type = (Class<?>) tmp[0];
-        }
+        @SuppressWarnings("index") // the class is List, which has exactly one type argument
+        Class<?> base_type = (Class<?>) pt.getActualTypeArguments()[0];
+        this.base_type = base_type;
 
         // System.out.printf ("Param type for %s = %s%n", field, pt);
         // System.out.printf ("raw type = %s, type = %s%n", pt.getRawType(),
@@ -787,8 +784,8 @@ public class Options {
    * Like getAnnotation, but returns null (and prints a warning) rather
    * than throwing an exception.
    */
-  @SuppressWarnings("initialization") // bug; see test case checkers/tests/nullness/generics/OptionsTest.java
-
+  @SuppressWarnings(
+      "initialization") // bug; see test case checkers/tests/nullness/generics/OptionsTest.java
   private static <T extends Annotation> /*@Nullable*/ T safeGetAnnotation(
       Field f, Class<T> annotationClass) {
     /*@Nullable*/ T annotation;
@@ -809,6 +806,7 @@ public class Options {
       JWhich.printClasspath();
       annotation = null;
     }
+
     return annotation;
   }
 
@@ -942,7 +940,7 @@ public class Options {
    * @throws ArgException if the command line contains misused options or an unknown option.
    * @see #parse(String[])
    */
-  @SuppressWarnings("index") // the ii-- makes its type LTlength
+  @SuppressWarnings("index")    // issue #16
   public String[] parse(String args) throws ArgException {
 
     // Split the args string on whitespace boundaries accounting for quoted
