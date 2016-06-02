@@ -1175,8 +1175,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if no such element is found in the array
+   * @return true iff sub is a contiguous subarray of a
    */
   @SuppressWarnings("index")    // arithmetic
   /*@Pure*/
@@ -1202,8 +1201,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array
+   * @return true iff sub is a contiguous subarray of a
    */
   @SuppressWarnings("index")    // arithmetic
   /*@Pure*/
@@ -1255,8 +1253,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array
+   * @return true iff sub is a contiguous subarray of a
    */
   @SuppressWarnings("index")    // arithmetic
   /*@Pure*/
@@ -1307,8 +1304,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array
+   * @return true iff sub is a contiguous subarray of a
    */
   @SuppressWarnings("index")    // arithmetic
   /*@Pure*/
@@ -1359,8 +1355,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array
+   * @return true iff sub is a contiguous subarray of a
    */
   @SuppressWarnings("index")    // arithmetic
   /*@Pure*/
@@ -1384,8 +1379,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array
+   * @return true iff sub is a contiguous subarray of a
    */
   @SuppressWarnings("index")    // arithmetic
   /*@Pure*/
@@ -1409,8 +1403,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array
+   * @return true iff sub is a contiguous subarray of a
    */
   @SuppressWarnings("index")    // arithmetic
   /*@Pure*/
@@ -1434,8 +1427,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array
+   * @return true iff sub is a contiguous subarray of a
    */
   @SuppressWarnings("index")    // arithmetic
   /*@Pure*/
@@ -1459,8 +1451,7 @@ public final class ArraysMDE {
    * @param a an array
    * @param sub subsequence to search for
    * @param a_offset first index at which to search
-   * @return the first index at which the second array starts in the first array,
-   *    or -1 if the element is not found in the array
+   * @return true iff sub is a contiguous subarray of a
    */
   @SuppressWarnings("index")    // arithmetic
   /*@Pure*/
@@ -2624,7 +2615,8 @@ public final class ArraysMDE {
       }
       if (ai != -1) {
         if (result[ai] != -1) {
-          throw new UnsupportedOperationException(String.format("Not invertible; a[%d]=%d and a[%d]=%d", result[ai], ai, i, ai));
+          throw new UnsupportedOperationException(
+              String.format("Not invertible; a[%d]=%d and a[%d]=%d", result[ai], ai, i, ai));
         }
         result[ai] = i;
       }
