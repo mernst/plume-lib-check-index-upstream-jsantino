@@ -582,10 +582,7 @@ public final class BCELUtil {
    * @param new_type the element to add to the end of the types array
    * @return the array (or a new one), with new_type at the end
    */
-<<<<<<< HEAD
-=======
   @SuppressWarnings("index")    // new A[i+1]
->>>>>>> cc22c733887034e72487debb973634209ea3df79
   public static Type[] add_type(Type[] types, Type new_type) {
     Type[] new_types = new Type[types.length + 1];
     System.arraycopy(types, 0, new_types, 0, types.length);
@@ -600,10 +597,7 @@ public final class BCELUtil {
    * @param new_type the element to add to the beginning of the types array
    * @return the array (or a new one), with new_type at the beginning
    */
-<<<<<<< HEAD
-=======
   @SuppressWarnings("index")    // new A[i+1]
->>>>>>> cc22c733887034e72487debb973634209ea3df79
   public static Type[] insert_type(Type new_type, Type[] types) {
     Type[] new_types = new Type[types.length + 1];
     System.arraycopy(types, 0, new_types, 1, types.length);
