@@ -31,6 +31,8 @@ import junit.framework.TestSuite;
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.signature.qual.*;
+import org.checkerframework.checker.index.qual.*;
+
 */
 
 // run like this:
@@ -56,7 +58,7 @@ import org.checkerframework.checker.signature.qual.*;
 // WeakHasherMap.java
 
 /** Test code for the plume package. */
-@SuppressWarnings({"interning"}) // interning is due to apparent bugs
+@SuppressWarnings({"interning", "index"}) // interning is due to apparent bugs // TODO index
 public final class TestPlume extends TestCase {
 
   // If true, do 100 instead of 100000 iterations when testing randomElements.
@@ -1577,8 +1579,8 @@ public final class TestPlume extends TestCase {
           {30, 30},
         });
   }
-
-  public static void compareOrderedPairIterator(OrderedPairIterator<Integer> opi, int[][] ints) {
+  @SuppressWarnings("index") // opi and ints have same length
+  public static void compareOrderedPairIterator(OrderedPairIterator<Integer> opi, int[] /*@MinLen(2)*/ [] ints) {
     int pairno = 0;
     while (opi.hasNext()) {
       Pair</*@Nullable*/ Integer, /*@Nullable*/ Integer> pair = opi.next();
@@ -1604,7 +1606,7 @@ public final class TestPlume extends TestCase {
     /**
      * @param args  how many to print; how many milliseconds between each
      */
-    public static void main(String[] args) {
+    public static void main(String /*@MinLen(2)*/ [] args) {
       assert args.length == 2;
       int limit = Integer.parseInt(args[0]);
       int period = Integer.parseInt(args[1]);
@@ -2572,6 +2574,7 @@ public final class TestPlume extends TestCase {
    * Test the comparison, indexof, and set equivalence calls in fuzzy
    * float.
    */
+  @SuppressWarnings("index") // arrays warned are longer than those used as bound
   public static void testFuzzyFloat() {
 
     FuzzyFloat ff = new FuzzyFloat(0.0001);
@@ -2705,7 +2708,7 @@ public final class TestPlume extends TestCase {
       assert_arrays_equals(g, g_copy);
       assert_arrays_equals(h, h_copy);
     }
-
+    
     // public boolean isElemMatch (double[] a1, double[] a2)
     {
       double[] f1 = new double[10];
