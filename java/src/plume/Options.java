@@ -383,7 +383,9 @@ public class Options {
         List<Object> default_obj_as_list = (List<Object>) default_obj;
         this.list = default_obj_as_list;
         // System.out.printf ("list default = %s%n", list);
-        this.base_type = (Class<?>) pt.getActualTypeArguments()[0];
+        @SuppressWarnings("index") // the class is List, which has exactly one type argument
+        Class<?> base_type = (Class<?>) pt.getActualTypeArguments()[0];
+        this.base_type = base_type;
 
         // System.out.printf ("Param type for %s = %s%n", field, pt);
         // System.out.printf ("raw type = %s, type = %s%n", pt.getRawType(),
@@ -938,6 +940,7 @@ public class Options {
    * @throws ArgException if the command line contains misused options or an unknown option.
    * @see #parse(String[])
    */
+  @SuppressWarnings("index")    // issue #16
   public String[] parse(String args) throws ArgException {
 
     // Split the args string on whitespace boundaries accounting for quoted

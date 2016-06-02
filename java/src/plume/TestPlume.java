@@ -29,6 +29,7 @@ import junit.framework.TestResult;
 import junit.framework.TestSuite;
 
 /*>>>
+import org.checkerframework.checker.index.qual.*;
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.signature.qual.*;
 */
@@ -198,6 +199,7 @@ public final class TestPlume extends TestCase {
     // public static int sum(int[][] a)
     assert 0 == ArraysMDE.sum(new int[0][0]);
     assert 78 == ArraysMDE.sum(new int[][] {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}});
+    assert 68 == ArraysMDE.sum(new int[][] {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 11, 12}});
 
     // public static double sum(double[] a)
     assert 0 == ArraysMDE.sum(new double[0]);
@@ -503,10 +505,10 @@ public final class TestPlume extends TestCase {
     assert_arrays_equals(ArraysMDE.fn_inverse(new int[] {1, 2, 3, 0}, 4), new int[] {3, 0, 1, 2});
     assert_arrays_equals(ArraysMDE.fn_inverse(new int[] {3, 2, 1, 0}, 4), new int[] {3, 2, 1, 0});
     try {
-      ArraysMDE.fn_inverse(new int[] {0, 0, 2, 3}, 4);
+      ArraysMDE.fn_inverse(new int[] {1, 0, 3, 0}, 4);
       throw new Error();
     } catch (UnsupportedOperationException e) {
-      assert e.getMessage() != null && e.getMessage().equals("Not invertible");
+      assert e.getMessage() != null && e.getMessage().equals("Not invertible; a[1]=0 and a[3]=0");
     }
     assert_arrays_equals(ArraysMDE.fn_inverse(new int[] {5}, 6), new int[] {-1, -1, -1, -1, -1, 0});
     assert_arrays_equals(
@@ -1578,7 +1580,8 @@ public final class TestPlume extends TestCase {
         });
   }
 
-  public static void compareOrderedPairIterator(OrderedPairIterator<Integer> opi, int[][] ints) {
+  /** Throws an assertion unless the paired iterator contains the same values as the argument array. */
+  public static void compareOrderedPairIterator(OrderedPairIterator<Integer> opi, int[] /*@MinLen(2)*/ [] ints) {
     int pairno = 0;
     while (opi.hasNext()) {
       Pair</*@Nullable*/ Integer, /*@Nullable*/ Integer> pair = opi.next();
@@ -1602,9 +1605,9 @@ public final class TestPlume extends TestCase {
    */
   public static class PrintOneIntPerTimePeriod {
     /**
-     * @param args  how many to print; how many milliseconds between each
+     * @param args  two-element array containing:  how many to print; how many milliseconds between each
      */
-    public static void main(String[] args) {
+    public static void main(String /*@MinLen(2)*/ [] args) {
       assert args.length == 2;
       int limit = Integer.parseInt(args[0]);
       int period = Integer.parseInt(args[1]);
@@ -2973,6 +2976,7 @@ public final class TestPlume extends TestCase {
    * Test command line option parsing (Options).
    * @throws ArgException if there is an illegal argument
    */
+  @SuppressWarnings("index")    // application-specific properties
   public static void testOptions() throws ArgException {
 
     TestOptions t = new TestOptions();
