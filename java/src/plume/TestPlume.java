@@ -3291,20 +3291,18 @@ public final class TestPlume {
     String[] sa = UtilMDE.splitLines(str);
     // for (String s : sa)
     //   System.out.printf ("'%s'%n", s);
-    assert sa.length == 11;
-    if (sa.length == 11) {
-	    assert sa[0].equals("one");
-	    assert sa[1].equals("two");
-	    assert sa[2].equals("three");
-	    assert sa[3].equals("four");
-	    assert sa[4].equals("five");
-	    assert sa[5].equals("");
-	    assert sa[6].equals("");
-	    assert sa[7].equals("six");
-	    assert sa[8].equals("");
-	    assert sa[9].equals("");
-	    assert sa[10].equals("");
-    }
+    assert sa.length == 11 : "@AssumeAssertion(index)";
+    assert sa[0].equals("one");
+    assert sa[1].equals("two");
+    assert sa[2].equals("three");
+    assert sa[3].equals("four");
+    assert sa[4].equals("five");
+    assert sa[5].equals("");
+    assert sa[6].equals("");
+    assert sa[7].equals("six");
+    assert sa[8].equals("");
+    assert sa[9].equals("");
+    assert sa[10].equals("");
   }
 
   // Figure 1 from http://www.boost.org/libs/graph/doc/lengauer_tarjan_dominator.htm#fig:dominator-tree-example

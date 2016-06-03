@@ -25,7 +25,6 @@ import java.lang.ref.ReferenceQueue;
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.dataflow.qual.*;
-import org.checkerframework.checker.index.qual.*;
 */
 
 
@@ -322,8 +321,7 @@ public class WeakIdentityHashMap<K,V>
         // These types look wrong to me.
         while ( (e = (Entry<K,V>) queue.poll()) != null) { // unchecked cast
             int h = e.hash;
-            @SuppressWarnings("assignment.type.incompatible") // IndexFor returns valid index
-            /*@IndexFor("table")*/ int i = indexFor(h, table.length);
+            int i = indexFor(h, table.length);
 
             Entry<K,V> prev = table[i];
             Entry<K,V> p = prev;
@@ -398,8 +396,7 @@ public class WeakIdentityHashMap<K,V>
         Object k = maskNull(key);
         int h = hasher (k);
         /*@Nullable*/ Entry<K,V>[] tab = getTable();
-        @SuppressWarnings("assignment.type.incompatible") // IndexFor returns valid index
-        /*@IndexFor("tab")*/ int index = indexFor(h, tab.length);
+        int index = indexFor(h, tab.length);
         Entry<K,V> e = tab[index];
         while (e != null) {
             if (e.hash == h && eq(k, e.get()))
@@ -431,8 +428,7 @@ public class WeakIdentityHashMap<K,V>
         Object k = maskNull(key);
         int h = hasher (k);
         /*@Nullable*/ Entry<K,V>[] tab = getTable();
-        @SuppressWarnings("assignment.type.incompatible") // IndexFor returns valid index
-        /*@IndexFor("tab")*/ int index = indexFor(h, tab.length);
+        int index = indexFor(h, tab.length);
         Entry<K,V> e = tab[index];
         while (e != null && !(e.hash == h && eq(k, e.get())))
             e = e.next;
@@ -456,8 +452,7 @@ public class WeakIdentityHashMap<K,V>
         K k = (K) maskNull(key);
         int h = System.identityHashCode (k);
         /*@Nullable*/ Entry<K,V>[] tab = getTable();
-        @SuppressWarnings("assignment.type.incompatible") // IndexFor returns valid index
-        /*@IndexFor("tab")*/ int i = indexFor(h, tab.length);
+        int i = indexFor(h, tab.length);
 
         for (Entry<K,V> e = tab[i]; e != null; e = e.next) {
             if (h == e.hash && eq(k, e.get())) {
@@ -530,8 +525,7 @@ public class WeakIdentityHashMap<K,V>
                     e.value = null; //  "   "
                     size--;
                 } else {
-                	@SuppressWarnings("assignment.type.incompatible") // IndexFor returns valid index
-                    /*@IndexFor("dest")*/ int i = indexFor(e.hash, dest.length);
+                    int i = indexFor(e.hash, dest.length);
                     e.next = dest[i];
                     dest[i] = e;
                 }
@@ -592,8 +586,7 @@ public class WeakIdentityHashMap<K,V>
         Object k = maskNull(key);
         int h = hasher (k);
         /*@Nullable*/ Entry<K,V>[] tab = getTable();
-        @SuppressWarnings("assignment.type.incompatible") // IndexFor returns valid index
-        /*@IndexFor("tab")*/ int i = indexFor(h, tab.length);
+        int i = indexFor(h, tab.length);
         Entry<K,V> prev = tab[i];
         Entry<K,V> e = prev;
 
@@ -625,8 +618,7 @@ public class WeakIdentityHashMap<K,V>
         Map.Entry<K,V> entry = (Map.Entry<K,V>)o;
         Object k = maskNull(entry.getKey());
         int h = hasher (k);
-        @SuppressWarnings("assignment.type.incompatible") // IndexFor returns valid index
-        /*@IndexFor("tab")*/ int i = indexFor(h, tab.length);
+        int i = indexFor(h, tab.length);
         Entry<K,V> prev = tab[i];
         Entry<K,V> e = prev;
 
@@ -679,7 +671,6 @@ public class WeakIdentityHashMap<K,V>
      *         specified value.
      */
     /*@Pure*/
-    @SuppressWarnings("index") // strange postfix sub
     public boolean containsValue(/*@Nullable*/ Object value) {
 	if (value==null)
             return containsNullValue();
@@ -695,7 +686,6 @@ public class WeakIdentityHashMap<K,V>
     /**
      * Special-case code for containsValue with null argument
      */
-    @SuppressWarnings("index") // strange postfix sub
     private boolean containsNullValue() {
 	/*@Nullable*/ Entry<K,V>[] tab = getTable();
         for (int i = tab.length ; i-- > 0 ;)
@@ -795,7 +785,7 @@ public class WeakIdentityHashMap<K,V>
         HashIterator() {
             index = (size() != 0 ? table.length : 0);
         }
-        @SuppressWarnings("index") // strange postfix sub
+
         public boolean hasNext() {
             /*@Nullable*/ Entry<K,V>[] t = table;
 

@@ -12,7 +12,6 @@ import java.util.jar.JarFile;
 /*>>>
 import org.checkerframework.checker.nullness.qual.*;
 import org.checkerframework.checker.index.qual.*;
-
 */
 
 /**
@@ -41,7 +40,6 @@ public final class ClassFileVersion {
    * @param args command-line arguments
    * @throws IOException if a file cannot be read
    */
-
   public static void main(String[] args) throws IOException {
     if (args.length == 0) {
       System.out.println("Supplied no arguments.");
