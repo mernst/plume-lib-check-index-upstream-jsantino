@@ -1357,19 +1357,19 @@ public final class TestPlume {
 
     class TestNonModulus {
       // javadoc won't let this be static
-      void check_strict(int[] nums, int /*@Nullable*/ [] goal_rm) {
+      void check_strict(int /*@MinLen(1)*/ [] nums, int /*@Nullable*/ [] goal_rm) {
         check(nums, goal_rm, true);
         Iterator<Integer> itor = int_array_iterator(nums);
         assert_arrays_equals(MathMDE.nonmodulus_strict_int(itor), goal_rm);
       }
 
       // javadoc won't let this be static
-      void check_nonstrict(int[] nums, int /*@Nullable*/ [] goal_rm) {
+      void check_nonstrict(int /*@MinLen(1)*/ [] nums, int /*@Nullable*/ [] goal_rm) {
         check(nums, goal_rm, false);
       }
 
       // javadoc won't let this be static
-      void check(int[] nums, int /*@Nullable*/ [] goal_rm, boolean strict) {
+      void check(int /*@MinLen(1)*/ [] nums, int /*@Nullable*/ [] goal_rm, boolean strict) {
         int[] rm;
         if (strict) {
           rm = MathMDE.nonmodulus_strict(nums);
@@ -1579,6 +1579,7 @@ public final class TestPlume {
   }
 
   /** Throws an assertion unless the paired iterator contains the same values as the argument array. */
+  @SuppressWarnings("index") // size of opi = ints.length
   public static void compareOrderedPairIterator(OrderedPairIterator<Integer> opi, int[] /*@MinLen(2)*/ [] ints) {
     int pairno = 0;
     while (opi.hasNext()) {
@@ -1738,6 +1739,7 @@ public final class TestPlume {
 
   // This cannot be static because it instantiates an inner class.
   @Test
+  @SuppressWarnings("index")
   public void testUtilMDE() {
 
     // public static intersectionCardinalityAtLeast(BitSet a, BitSet b, int i)
@@ -2584,6 +2586,7 @@ public final class TestPlume {
    * float.
    */
   @Test
+  @SuppressWarnings("index")
   public void testFuzzyFloat() {
 
     FuzzyFloat ff = new FuzzyFloat(0.0001);
@@ -3289,17 +3292,19 @@ public final class TestPlume {
     // for (String s : sa)
     //   System.out.printf ("'%s'%n", s);
     assert sa.length == 11;
-    assert sa[0].equals("one");
-    assert sa[1].equals("two");
-    assert sa[2].equals("three");
-    assert sa[3].equals("four");
-    assert sa[4].equals("five");
-    assert sa[5].equals("");
-    assert sa[6].equals("");
-    assert sa[7].equals("six");
-    assert sa[8].equals("");
-    assert sa[9].equals("");
-    assert sa[10].equals("");
+    if (sa.length == 11) {
+	    assert sa[0].equals("one");
+	    assert sa[1].equals("two");
+	    assert sa[2].equals("three");
+	    assert sa[3].equals("four");
+	    assert sa[4].equals("five");
+	    assert sa[5].equals("");
+	    assert sa[6].equals("");
+	    assert sa[7].equals("six");
+	    assert sa[8].equals("");
+	    assert sa[9].equals("");
+	    assert sa[10].equals("");
+    }
   }
 
   // Figure 1 from http://www.boost.org/libs/graph/doc/lengauer_tarjan_dominator.htm#fig:dominator-tree-example
