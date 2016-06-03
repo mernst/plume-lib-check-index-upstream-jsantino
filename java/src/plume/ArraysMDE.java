@@ -352,7 +352,6 @@ public final class ArraysMDE {
    * @param a a 2d array
    * @return the sum of all the elements of a 2d array of integers
    */
-  @SuppressWarnings("index") // don't support 2d
   public static int sum(int[][] a) {
     int sum = 0;
     for (int i = 0; i < a.length; i++) {
@@ -381,7 +380,6 @@ public final class ArraysMDE {
    * @param a a 2d array
    * @return the sum of all the elements of a 2d array of doubles
    */
-  @SuppressWarnings("index") // don't support 2d
   public static double sum(double[][] a) {
     double sum = 0;
     for (int i = 0; i < a.length; i++) {
@@ -2237,7 +2235,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return true iff the array is sorted
    */
-  @SuppressWarnings("index")    // array length: i+1 is an index because i<a.length+1
+  @SuppressWarnings("index")    // array length: i+1 is an index because i<a.length-1
   /*@Pure*/
   public static boolean sorted(int[] a) {
     for (int i = 0; i < a.length - 1; i++) {
@@ -2254,7 +2252,7 @@ public final class ArraysMDE {
    * @return true iff the array is sorted
    */
   /*@Pure*/
-  @SuppressWarnings("index")    // array length: i+1 is an index because i<a.length+1
+  @SuppressWarnings("index")    // array length: i+1 is an index because i<a.length-1
   public static boolean sorted(long[] a) {
     for (int i = 0; i < a.length - 1; i++) {
       if (a[i + 1] < a[i]) {
@@ -2269,7 +2267,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return true iff the array is sorted in desending order
    */
-  @SuppressWarnings("index")    // array length: i+1 is an index because i<a.length+1
+  @SuppressWarnings("index")    // array length: i+1 is an index because i<a.length-1
   /*@Pure*/
   public static boolean sorted_descending(int[] a) {
     for (int i = 0; i < a.length - 1; i++) {
@@ -2285,7 +2283,7 @@ public final class ArraysMDE {
    * @param a an array
    * @return true iff the array is sorted in desending order
    */
-  @SuppressWarnings("index")    // array length: i+1 is an index because i<a.length+1
+  @SuppressWarnings("index")    // array length: i+1 is an index because i<a.length-1
   /*@Pure*/
   public static boolean sorted_descending(long[] a) {
     for (int i = 0; i < a.length - 1; i++) {
